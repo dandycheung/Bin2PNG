@@ -18,7 +18,7 @@
     <ClCompile Include="lodepng.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Bin2PNG.c">
+    <ClCompile Include="bin2png.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

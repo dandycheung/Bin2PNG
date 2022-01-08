@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{45CA20A3-E23A-4B55-A8F8-6B94CEA6A9CA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Bin2PNG</RootNamespace>
+    <RootNamespace>bin2png</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -78,7 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bin2PNG.c" />
+    <ClCompile Include="bin2png.c" />
     <ClCompile Include="lodepng.c" />
   </ItemGroup>
   <ItemGroup>

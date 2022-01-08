@@ -274,7 +274,7 @@
 			Name="Source Files"
 			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.scala;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
 			GUID="{8DB2331E-4954-4AFE-AAE5-D2303DFEF3E2}">
-			<F N="Bin2PNG.c"/>
+			<F N="bin2png.c"/>
 			<F N="lodepng.c"/>
 		</Folder>
 		<Folder

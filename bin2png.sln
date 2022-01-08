@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bin2PNG", "Bin2PNG.vcxproj", "{45CA20A3-E23A-4B55-A8F8-6B94CEA6A9CA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bin2png", "bin2png.vcxproj", "{45CA20A3-E23A-4B55-A8F8-6B94CEA6A9CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
