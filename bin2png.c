@@ -1,32 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+#include "cwalk.h"
 #include "lodepng.h"
 
 #define PNG_FILE "image.png"
 #define BIN_IN_FILE "in.exe"
 #define BIN_OUT_FILE "out.exe"
 
-int binaryToPng();
-int pngToBinary();
+int printUsage(int argc, char *argv[]);
+int binaryToPng(char *infile, char *outfile);
+int pngToBinary(char *infile, char *outfile);
 
 void main(int argc, char *argv[]) {
-	if (argc > 1) {
-		if (strcmp(argv[1], "e") == 0 || strcmp(argv[1], "encrypt") == 0) {
-			binaryToPng();
-			return;
-		} else if (strcmp(argv[1], "d") == 0 || strcmp(argv[1], "decrypt") == 0) {
-			pngToBinary();
-			return;
-		}
+	char *infile, *outfile;
+	int mode = -1;
+
+	if (argc < 3 || argc > 4) {
+		printUsage(argc, argv);
+		return;
 	}
 
-	printf("Usage : %s (encrypt|decrypt)", argv[0]);
+	if (strcmp(argv[1], "e") == 0 || strcmp(argv[1], "encrypt") == 0)
+		mode = 0;
+	else if (strcmp(argv[1], "d") == 0 || strcmp(argv[1], "decrypt") == 0)
+		mode = 1;
+
+	if (mode < 0) {
+		printUsage(argc, argv);
+		return;
+	}
+
+	// TODO:
+	// 此处需要根据输入参数，整理出输入文件和输出文件的绝对路径。规则如下。
+	// 1. 如果参数完整，首先要将输入文件名和输出文件名绝对路径化（如果输入参数为相对路径，则要引入当前工作目录进行拼装，然后绝对化）；
+	// 1.1 如果输入路径不是合法文件，或者改文件不存在，则报错退出；
+	// 1.2 如果输出路径中没有文件名部分（也即以 / 结尾），则文件名根据输入文件名生成；如果输入文件名具有扩展名，则将该扩展名变更为 png，否则追加 png 扩展名；
+	// 2. 如果参数少一个，则认为缺少了输出文件名，将根据 mode 和输入文件名进行生成；路径保持与输入文件相同，文件名生成规则与 1.2 中的规则相同。
+
+	infile = mode == 0 ? BIN_IN_FILE : PNG_FILE;
+	outfile = mode == 0 ? PNG_FILE : BIN_OUT_FILE;
+
+	if (mode == 0)
+		binaryToPng(infile, outfile);
+	else if (mode == 1)
+		pngToBinary(infile, outfile);
+}
+
+int printUsage(int argc, char *argv[]) {
+	printf("Usage: %s (encrypt|decrypt)", argv[0]);
 	puts("");
 }
 
 // Convert a binary file to PNG
-int binaryToPng() {
+int binaryToPng(char *infile, char *outfile) {
 	FILE *binaryFile;
 	unsigned long fileSize;
 	unsigned char *fileBuff;
@@ -41,9 +69,9 @@ int binaryToPng() {
 	unsigned int i, error;
 
 	// Open binary file
-	binaryFile = fopen(BIN_IN_FILE, "rb");
+	binaryFile = fopen(infile, "rb");
 	if (binaryFile == NULL) {
-		printf("Error reading '%s' file.", BIN_IN_FILE);
+		printf("Error reading '%s' file.", infile);
 		return 0;
 	}
 
@@ -85,10 +113,10 @@ int binaryToPng() {
 
 	puts("Starting conversion to PNG file.");
 
-	printf("Writing PNG file to %s...\n", PNG_FILE);
+	printf("Writing PNG file to %s...\n", outfile);
 
 	// Write PNG file
-	error = lodepng_encode32_file(PNG_FILE, pngData, imageWidth, imageHeight);
+	error = lodepng_encode32_file(outfile, pngData, imageWidth, imageHeight);
 
 	// Free memory
 	free(pngData);
@@ -103,7 +131,7 @@ int binaryToPng() {
 }
 
 // Convert a PNG file to binary
-int pngToBinary() {
+int pngToBinary(char *infile, char *outfile) {
 	FILE *binaryFile;
 	unsigned long fileSize;
 	unsigned char *binaryBuff;
@@ -115,7 +143,7 @@ int pngToBinary() {
 	printf("Reading PNG file (%s)...\n", PNG_FILE);
 
 	// Decode PNG file to pngData array
-	error = lodepng_decode32_file(&pngData, &imageWidth, &imageHeight, PNG_FILE);
+	error = lodepng_decode32_file(&pngData, &imageWidth, &imageHeight, infile);
 	if (error) {
 		printf("error %u: %s.\n", error, lodepng_error_text(error));
 		return 0;
@@ -131,9 +159,9 @@ int pngToBinary() {
 	printf("Writing binary file to %s...\n", BIN_OUT_FILE);
 
 	// Write data to binary file
-	binaryFile = fopen(BIN_OUT_FILE, "wb");
+	binaryFile = fopen(outfile, "wb");
 	if (binaryFile == NULL) {
-		printf("Error writing '%s' file.", BIN_IN_FILE);
+		printf("Error writing '%s' file.", outfile);
 
 		free(pngData);
 
