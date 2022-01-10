@@ -134,7 +134,9 @@
 				Name="LinkerOutputType"
 				Value="Executable"/>
 		</List>
-		<Includes/>
+		<Includes>
+			<Include Dir="./"/>
+		</Includes>
 		<Libs PreObjects="0">
 			<Lib File="-lm"/>
 		</Libs>
@@ -275,12 +277,14 @@
 			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.scala;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
 			GUID="{8DB2331E-4954-4AFE-AAE5-D2303DFEF3E2}">
 			<F N="bin2png.c"/>
+			<F N="cwalk.c"/>
 			<F N="lodepng.c"/>
 		</Folder>
 		<Folder
 			Name="Header Files"
 			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
 			GUID="{8F9F9542-202F-42CF-AFC2-0AAFDAA64EA9}">
+			<F N="cwalk.h"/>
 			<F N="lodepng.h"/>
 		</Folder>
 		<Folder
